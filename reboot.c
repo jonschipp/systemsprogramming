@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/syscall.h>
 #include <linux/reboot.h>
 #include <errno.h>
 #include <strings.h>
@@ -31,8 +32,8 @@ usage(void){
   " -5|--power-off	        Power off\n"
   " -6|--restart	        Restart\n"
   " -7|--restart2	        Restart 2\n"
-  " -8|--sw-suspend	Suspend to disk (hibernate)\n");
-  "More info: reboot(2), linux/include/uapi/linux/reboot.h"
+  " -8|--sw-suspend	Suspend to disk (hibernate)\n"
+  "More info: reboot(2), linux/include/uapi/linux/reboot.h");
 }
 
 funfacts(void){
@@ -42,7 +43,7 @@ funfacts(void){
   "#LINUX_REBOOT_MAGIC2  is 672274793"
   "#LINUX_REBOOT_MAGIC2A is 85072278"
   "#LINUX_REBOOT_MAGIC2B is 369367448"
-  "#LINUX_REBOOT_MAGIC2C is 537993216)"
+  "#LINUX_REBOOT_MAGIC2C is 537993216");
 }
 
 int main(int argc, char **argv){
@@ -83,7 +84,7 @@ int main(int argc, char **argv){
   printf("LINUX_REBOOT_MAGIC1: 0x%08x\nLINUX_REBOOT_MAGIC2: 0x%08x\n", LINUX_REBOOT_MAGIC1, LINUX_REBOOT_MAGIC2);
   printf("Option: Hexidecimal 0x%08x\n", option);
 
-  if (reboot(LINUX_REBOOT_MAGIC1, LINUX_REBOOT_MAGIC2, option) == -1){
+  if (syscall(SYS_reboot, LINUX_REBOOT_MAGIC1, LINUX_REBOOT_MAGIC2, option) == -1){
 	perror("ERROR: Failure using reboot");
 	exit(-1);
   }
