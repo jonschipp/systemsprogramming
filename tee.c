@@ -25,10 +25,9 @@ usage(void){
 }
 
 int main(int argc, char **argv){
-  int fd, w_ret, opt, opt_index;
+  int fd, opt, opt_index;
   int options = O_WRONLY | O_CREAT | O_TRUNC;
-  ssize_t r_ret;
-  //size_t w_ret;
+  ssize_t r_ret, w_ret;
   char buffer[BUF_SIZE];
   const char *filename;
 
@@ -36,7 +35,6 @@ int main(int argc, char **argv){
     puts("No options given, try ``--help''");
     exit(1);
   }
-
 
   while ((opt = getopt_long(argc, argv, short_options,
 			long_options, &opt_index)) != EOF) {
