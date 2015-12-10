@@ -21,7 +21,8 @@ usage(void){
   "        Basic implementation of tee\n"
   "Options:\n"
   " -h|--help		Display help\n"
-  " -a|--append	        Append\n");
+  " -a|--append	        Append\n"
+  "Usage: cat stuff.txt | ./tee -a newstuff.txt");
 }
 
 int main(int argc, char **argv){
@@ -42,7 +43,7 @@ int main(int argc, char **argv){
     case 'h':
       usage(); exit(0);
     case 'a':
-      options = O_WRONLY | O_APPEND; break;
+      options = O_WRONLY | O_CREAT | O_APPEND; break;
     //case 'f':
     //  filename = optarg;
     default:
