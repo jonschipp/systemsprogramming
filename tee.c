@@ -54,6 +54,7 @@ int main(int argc, char **argv){
 
   if ((fd = open(argv[2], options)) == -1){
     perror("open");
+    if (errno == EISDIR) { exit(1); }
   }
     
   while(((r_ret = read(STDIN_FILENO, buffer, BUF_SIZE)) != 0)){
