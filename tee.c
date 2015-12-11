@@ -10,7 +10,7 @@
 
 #define BUF_SIZE 1024
 
-static const char *short_options = "haof:";
+static const char *short_options = "haf:";
 static const struct option long_options[] = {
   {"help",         no_argument, NULL, 'h'},
   {"--append",     no_argument, NULL, 'a'},
