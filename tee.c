@@ -10,19 +10,21 @@
 
 #define BUF_SIZE 1024
 
-static const char *short_options = "hao";
+static const char *short_options = "haof:";
 static const struct option long_options[] = {
   {"help",         no_argument, NULL, 'h'},
   {"--append",     no_argument, NULL, 'a'},
+  {"--file",       required_argument, NULL, 'f'},
 };
 
-usage(void){
+void usage(void){
   puts("--Tee--\n"
   "        Basic implementation of tee\n"
   "Options:\n"
   " -h|--help		Display help\n"
   " -a|--append	        Append\n"
-  "Usage: cat stuff.txt | ./tee -a newstuff.txt");
+  " -f|--file	        Write to file\n"
+  "Usage: cat stuff.txt | ./tee -a -f newstuff.txt");
 }
 
 int main(int argc, char **argv){
@@ -44,15 +46,15 @@ int main(int argc, char **argv){
       usage(); exit(0);
     case 'a':
       options = O_WRONLY | O_CREAT | O_APPEND; break;
-    //case 'f':
-    //  filename = optarg;
+    case 'f':
+      filename = optarg;
     default:
       break;
     }
   }
 
 
-  if ((fd = open(argv[2], options)) == -1){
+  if ((fd = open(filename, options, S_IRUSR | S_IWUSR)) == -1){
     perror("open");
     if (errno == EISDIR) { exit(1); }
   }
