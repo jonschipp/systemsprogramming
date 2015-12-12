@@ -36,14 +36,14 @@ int main(int argc, char **argv){
 
   if (argc <= 1){
     puts("No options given, try ``--help''");
-    exit(1);
+    exit(EXIT_FAILURE);
   }
 
   while ((opt = getopt_long(argc, argv, short_options,
 			long_options, &opt_index)) != EOF) {
     switch (opt) {
     case 'h':
-      usage(); exit(0);
+      usage(); exit(EXIT_SUCCESS);
     case 'a':
       options = O_WRONLY | O_CREAT | O_APPEND; break;
     case 'f':
@@ -56,7 +56,7 @@ int main(int argc, char **argv){
 
   if ((fd = open(filename, options, S_IRUSR | S_IWUSR)) == -1){
     perror("open");
-    if (errno == EISDIR) { exit(1); }
+    if (errno == EISDIR) { exit(EXIT_FAILURE); }
   }
     
   while(((r_ret = read(STDIN_FILENO, buffer, BUF_SIZE)) != 0)){
