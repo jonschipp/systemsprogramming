@@ -15,6 +15,7 @@ help:
 	$(Q)echo " $(red)beginning_append$(normal)  - validate how O_APPEND works"
 	$(Q)echo " $(red)cp$(normal)                - a implementation of cp"
 	$(Q)echo " $(red)dup$(normal)               - a implementation of dup/dup2 using fcntl ($(yellow)dup.h$(normal))"
+	$(Q)echo " $(red)fdwrite$(normal)           - show output of writes(2) to different fd's"
 	$(Q)echo " $(red)reboot$(normal)            - call reboot(2) with various options ($(yellow)linux/reboot.h$(normal))"
 	$(Q)echo " $(red)tee$(normal)               - a implementation of tee"
 	$(Q)echo " $(red)verify_dup$(normal)        - verify settings of duplicate file descriptor"
@@ -39,6 +40,11 @@ dup:
 	gcc -c dup.c -o dup.o
 	gcc -o dup i_dup.c dup.c
 	$(Q)echo " $(yellow)Try ./dup$(normal)"
+
+fdwrite:
+	$(Q)echo " $(yellow)Building fd_write$(normal)"
+	gcc -o fdwrite fd_write.c
+	$(Q)echo " $(yellow)Try ./fdwrite$(normal)"
 
 reboot:
 	$(Q)echo " $(yellow)Building reboot$(normal)"
